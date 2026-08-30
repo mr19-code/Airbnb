@@ -38,3 +38,29 @@ exports.getFavoriteList = (req, res, next) => {
   });
 }
 
+exports.postAddToFavourits = (req, res, next) => {
+  console.log("Adding to favorites", req.body);
+  res.redirect("/favourites");
+
+}
+
+exports.getHomeDetails = (req, res, next) => {
+  const homeId = req.params.homeId;
+  console.log("At home Details page with ID:", homeId);
+  Home.findById(homeId, home => {
+    if (!home) {
+      console.log("Home not found");
+      res.redirect("/homes");
+    } else {
+      res.render('store/home-detail', {
+        home: home,
+        pageTitle: 'Home Details',
+        currentPage: 'Home'
+      });
+    }
+  });
+}
+
+
+
+

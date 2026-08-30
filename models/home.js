@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const rootDir = require("../utils/pathUtil");
 const { error } = require("console");
+const homeDataPath = path.join(rootDir, "data", "homes.json");
 
 //fake Database
 let registeredHomes = [];
@@ -18,9 +19,9 @@ module.exports = class Home {
 
 
   save() {
+    this.id = Math.random().toString();
     Home.fetchAll(registeredHomes => {
       registeredHomes.push(this);
-      const homeDataPath = path.join(rootDir, "data", "homes.json");
       fs.writeFileSync(homeDataPath, JSON.stringify(registeredHomes), error => {
       });
     })
@@ -28,12 +29,18 @@ module.exports = class Home {
   }
 
   static fetchAll(callback) {
-    const homeDataPath = path.join(rootDir, 'data', 'homes.json');
     const fileContent = fs.readFile(homeDataPath, (err, data) => {
       if (!err) {
         registeredHomes = JSON.parse(data);
       }
       callback(registeredHomes);
     })
+  }
+
+  static findById(homeId, callback) {
+    this.fetchAll(homes => {
+      const homeFound = homes.find(home => home.id === homeId);
+      callback(homeFound);
+    });
   }
 }
