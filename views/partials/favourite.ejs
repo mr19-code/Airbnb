@@ -1,19 +1,10 @@
-<!-- <button
-  type="button"
-  class="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-red-600 font-semibold transition duration-300 hover:bg-red-100"
->
-  <span aria-hidden="true">♡</span>
-  <span>Add to Favourites</span>
-</button> -->
-  <div class="mt-2">
-                    <form action="/favourite" method="POST">
-                      <button
-                        type="submit"
-                        class="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-red-600 font-semibold transition duration-300 hover:bg-red-100"
-                      >
-                        <span aria-hidden="true">♡</span>
-                        <span>Add to Favourites</span>
-                        <input type="hidden" name="id" value="<%= home.id %>">
-                      </button>
-                    </form>
-                  </div>
+<form action="/favourites" method="POST">
+  <button
+    type="submit"
+    class="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-red-600 font-semibold transition duration-300 hover:bg-red-100"
+  >
+    <span aria-hidden="true">♡</span>
+    <span>Add to Favourites</span>
+  </button>
+  <input type="hidden" name="id" value="<%= home.id %>" />
+</form>

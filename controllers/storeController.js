@@ -1,4 +1,6 @@
 const Home = require("../models/home");
+const Favourite = require("../models/favourite");
+
 exports.getIndex = (req, res, next) => {
   Home.fetchAll(registeredHomes => {
     res.render('store/index', {
@@ -7,7 +9,6 @@ exports.getIndex = (req, res, next) => {
       currentPage: 'index'
     });
   });
-
 };
 
 exports.getHomes = (req, res, next) => {
@@ -18,7 +19,6 @@ exports.getHomes = (req, res, next) => {
       currentPage: 'Home'
     });
   });
-
 };
 
 exports.getBookings = (req, res, next) => {
@@ -29,28 +29,34 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavoriteList = (req, res, next) => {
-  Home.fetchAll(registeredHomes => {
-    res.render('store/favourite-list', {
-      registeredHomes: registeredHomes,
-      pageTitle: 'My Favorites',
-      currentPage: 'favorites'
+  Favourite.getFavourites(favouriteIds => {
+    Home.fetchAll(registeredHomes => {
+      const favouriteHomes = registeredHomes.filter(home => favouriteIds.includes(home.id));
+      res.render('store/favourite-list', {
+        registeredHomes: favouriteHomes,
+        pageTitle: 'My Favorites',
+        currentPage: 'favorites'
+      });
     });
   });
-}
+};
 
 exports.postAddToFavourits = (req, res, next) => {
-  console.log("Adding to favorites", req.body);
-  res.redirect("/favourites");
-
-}
+  Favourite.addToFavourite(req.body.id, error => {
+    if (error) {
+      console.log("Error while marketing favourite", error);
+    }
+    res.redirect('/favourites');
+  });
+};
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
-  console.log("At home Details page with ID:", homeId);
+  console.log('At home Details page with ID:', homeId);
   Home.findById(homeId, home => {
     if (!home) {
-      console.log("Home not found");
-      res.redirect("/homes");
+      console.log('Home not found');
+      res.redirect('/homes');
     } else {
       res.render('store/home-detail', {
         home: home,
@@ -60,7 +66,4 @@ exports.getHomeDetails = (req, res, next) => {
     }
   });
 }
-
-
-
 

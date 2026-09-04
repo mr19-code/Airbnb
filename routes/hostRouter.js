@@ -9,8 +9,10 @@ const hostController = require('../controllers/hostController');
 // Local Module
 const rootDir = require("../utils/pathUtil");
 
-hostRouter.get("/add-home", hostController.getHomePage);
+hostRouter.get("/add-home", hostController.getAddHome);
 hostRouter.post("/add-home", hostController.addHome);
 hostRouter.get("/homes", hostController.getHomes);
 hostRouter.get("/host-home-list", hostController.getHostHomes);
+hostRouter.get("/edit-home/:id", hostController.getEditHome);
+
 module.exports = hostRouter;
