@@ -26,7 +26,9 @@
                 <a class="bg-blue-300 px-3 py-2 rounded-md text-gray-800 font-medium hover:bg-blue-400 transition duration-200" href="/host/edit-home/<%= home.id %>?editing=true">
                   Edit
                 </a>
-                <button class="bg-red-300 p-2 rounded-md">Delete</button>
+                <form action="/host/delete-home/<%= home.id %>" method="POST">
+                  <button type="submit" class="bg-red-300 p-2 rounded-md">Delete</button>
+                </form>
               </div>
             </div>
           </div>
