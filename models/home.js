@@ -1,42 +1,32 @@
 
-const db = require("./utils/databaseUtil");
+const { getDb } = require('../utils/databaseUtil');
 module.exports = class Home {
-  constructor(houseName, price, location, rating, photoUrl) {
+  constructor(houseName, price, location, rating, photoUrl, description, id) {
     this.houseName = houseName;
     this.price = price;
     this.location = location;
     this.rating = rating;
     this.photoUrl = photoUrl;
+    this.description = description;
+    this.id = id;
   }
 
   save() {
+    const db = getDb();
+    return db.collection('homes').insertOne(this)
 
   }
 
-  static fetchAll(callback) {
-    // db.execute("SELECT * FROM homes").then(([rows, fields]) => {
-    //   console.log('Getting From DB', rows);
-    // })
-    //   .catch(error => {
-    //     console.error('Error executing query:', error);
-    //   })
-
+  static fetchAll() {
 
   }
 
-  static findById(homeId, callback) {
+  static findById(homeId) {
 
   }
 
-  static deleteById(homeId, callback) {
-    this.fetchAll(homes => {
-      homes = homes.filter(home => home.id !== homeId);
-      fs.writeFile(homeDataPath, JSON.stringify(homes),
-        error => {
-          Favourite.deleteById(homeId, callback);
-        })
-    });
-
+  static deleteById(homeId) {
+    const db = getDb();
+    return db.collection('homes').deleteOne({ id: homeId });
   }
-
 };
