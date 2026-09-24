@@ -7,7 +7,7 @@
         <%= editing ? 'Edit Your Home' : 'Register Your Home on AirBnB' %>
       </h1>
       <form action="/host/<%= editing ?"edit-home" : "add-home"%>" method="POST" class="max-w-md mx-auto">
-        <input type="hidden" name="id" value="<%= editing ? home.id : '' %>" />
+        <input type="hidden" name="id" value="<%= editing ? home._id : '' %>" />
 
         <input
           type="text"

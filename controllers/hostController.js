@@ -1,7 +1,7 @@
 const Home = require("../models/home");
 
-exports.getHomes = exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then(([registeredHomes]) => {
+ exports.getHostHomes = (req, res, next) => {
+  Home.fetchAll().then((registeredHomes) => {
     res.render("host/host-home-list", {
       registeredHomes: registeredHomes,
       pageTitle: "Host Homes List",
@@ -22,8 +22,7 @@ exports.getEditHome = (req, res, next) => {
   const homeId = req.params.id;
   const editing = req.query.editing === 'true';
 
-  Home.findById(homeId).then(([homes]) => {
-    const home = homes[0];
+  Home.findById(homeId).then((home) => {
     if (!home) {
       console.log("Home not found for editing.");
       return res.redirect("/host/host-home-list");

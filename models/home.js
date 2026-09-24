@@ -1,14 +1,16 @@
-
+const { ObjectId } = require('mongodb');
 const { getDb } = require('../utils/databaseUtil');
 module.exports = class Home {
-  constructor(houseName, price, location, rating, photoUrl, description, id) {
+  constructor(houseName, price, location, rating, photoUrl, description, _id) {
     this.houseName = houseName;
     this.price = price;
     this.location = location;
     this.rating = rating;
     this.photoUrl = photoUrl;
     this.description = description;
-    this.id = id;
+    if (_id) {
+      this._id = _id;
+    }
   }
 
   save() {
@@ -18,15 +20,22 @@ module.exports = class Home {
   }
 
   static fetchAll() {
-
+ const db = getDb();
+    return db.collection('homes')
+    .find()
+    .toArray();
   }
 
   static findById(homeId) {
-
+    const db = getDb();
+    return db.collection('homes')
+    .find({ _id: new ObjectId (String(homeId)) })
+    .next();
   }
 
   static deleteById(homeId) {
     const db = getDb();
-    return db.collection('homes').deleteOne({ id: homeId });
+    return db.collection('homes')
+    .deleteOne({ _id: new ObjectId(homeId) });
   }
 };

@@ -6,10 +6,16 @@
       <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
         Here are our registered homes:
       </h2>
+      <% const getHomeImage = (home) => {
+           if (!home || !home.photoUrl) return '/images/placeholder.png';
+           if (home.photoUrl.startsWith('http')) return home.photoUrl;
+           if (home.photoUrl.startsWith('/')) return home.photoUrl;
+           return '/images/' + home.photoUrl;
+      }; %>
       <div class="flex flex-wrap justify-center gap-6">
         <% registeredHomes.forEach(home => { %>
           <div class="w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-md transition duration-300 hover:shadow-lg">
-            <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="h-48 w-full object-cover" onerror="this.onerror=null;this.src='/images/placeholder.png'" />
+            <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="h-48 w-full object-cover" onerror="this.onerror=null;this.src='/images/placeholder.png'" />
             <div class="p-4">
               <h3 class="mb-2 text-xl font-semibold text-gray-800"><%= home.houseName %></h3>
               <p class="mb-2 text-gray-600"><i class="fas fa-map-marker-alt mr-2"></i><%= home.location %></p>
@@ -23,7 +29,7 @@
                 </div>
               </div>
               <div class="mt-2 flex items-center justify-between gap-2">
-                <a href="/homes/<%= home.id %>" class="rounded bg-blue-300 px-3 py-2 text-sm font-medium text-gray-800 transition hover:bg-blue-400">Details</a>
+                <a href="/homes/<%= home._id %>" class="rounded bg-blue-300 px-3 py-2 text-sm font-medium text-gray-800 transition hover:bg-blue-400">Details</a>
                 <%- include('../partials/favourite', { home: home }) %>
               </div>
             </div>

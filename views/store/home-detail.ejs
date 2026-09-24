@@ -6,10 +6,15 @@
           <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
               Details of <%= home.houseName %>
           </h2>
-          
+          <% const getHomeImage = (home) => {
+               if (!home || !home.photoUrl) return '/images/placeholder.png';
+               if (home.photoUrl.startsWith('http')) return home.photoUrl;
+               if (home.photoUrl.startsWith('/')) return home.photoUrl;
+               return '/images/' + home.photoUrl;
+          }; %>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div class="rounded-lg overflow-hidden">
-                  <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="w-full h-96 object-cover">
+                  <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="w-full h-96 object-cover">
               </div>
               
               <div class="space-y-6">

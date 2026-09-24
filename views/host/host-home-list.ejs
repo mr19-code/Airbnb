@@ -6,10 +6,16 @@
       <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
         Here are your host homes:
       </h2>
+      <% const getHomeImage = (home) => {
+           if (!home || !home.photoUrl) return '/images/placeholder.png';
+           if (home.photoUrl.startsWith('http')) return home.photoUrl;
+           if (home.photoUrl.startsWith('/')) return home.photoUrl;
+           return '/images/' + home.photoUrl;
+      }; %>
       <div class="flex flex-wrap justify-center gap-6">
         <% registeredHomes.forEach(home => { %>
           <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 w-full max-w-sm">
-            <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'">
+            <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'">
             <div class="p-4">
               <h3 class="text-xl font-semibold text-gray-800 mb-2"><%= home.houseName %></h3>
               <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i><%= home.location %></p>
@@ -23,10 +29,10 @@
                 </div>
               </div>
               <div class="flex gap-2 mt-4">
-                <a class="bg-blue-300 px-3 py-2 rounded-md text-gray-800 font-medium hover:bg-blue-400 transition duration-200" href="/host/edit-home/<%= home.id %>?editing=true">
+                <a class="bg-blue-300 px-3 py-2 rounded-md text-gray-800 font-medium hover:bg-blue-400 transition duration-200" href="/host/edit-home/<%= home._id %>?editing=true">
                   Edit
                 </a>
-                <form action="/host/delete-home/<%= home.id %>" method="POST">
+                <form action="/host/delete-home/<%= home._id %>" method="POST">
                   <button type="submit" class="bg-red-300 p-2 rounded-md">Delete</button>
                 </form>
               </div>
