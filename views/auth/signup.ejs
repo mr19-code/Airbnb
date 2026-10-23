@@ -1,0 +1,221 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
+      <section class="mx-auto grid max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl shadow-gray-200/70 lg:grid-cols-5">
+        <aside class="relative overflow-hidden bg-gradient-to-br from-red-500 to-rose-600 p-8 text-white sm:p-10 lg:col-span-2 lg:p-12">
+          <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10"></div>
+          <div class="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-white/10"></div>
+
+          <div class="relative flex h-full flex-col">
+            <span class="mb-10 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-xl">
+              <i class="fa-solid fa-house" aria-hidden="true"></i>
+            </span>
+
+            <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-red-100">
+              Your next chapter
+            </p>
+            <h2 class="mb-4 text-3xl font-bold leading-tight sm:text-4xl">
+              Feel at home, wherever you go.
+            </h2>
+            <p class="mb-10 max-w-sm leading-relaxed text-red-100">
+              Create an account to discover welcoming stays or share a place of your own.
+            </p>
+
+            <div class="mt-auto space-y-4">
+              <div class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
+                  <i class="fa-solid fa-compass" aria-hidden="true"></i>
+                </span>
+                <span class="text-sm font-medium">Find a stay that feels right</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
+                  <i class="fa-solid fa-key" aria-hidden="true"></i>
+                </span>
+                <span class="text-sm font-medium">Welcome guests as a host</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div class="p-6 sm:p-10 lg:col-span-3 lg:p-12">
+          <div class="mb-8">
+            <p class="mb-2 text-sm font-semibold text-red-500">GET STARTED</p>
+            <h1 class="text-3xl font-bold text-gray-900">Create your account</h1>
+            <p class="mt-2 text-gray-500">It only takes a minute to join us.</p>
+          </div>
+
+          <form action="/auth/signup" method="POST" class="space-y-5">
+              <%- include('../partials/errors') %>
+              <div>
+            <div class="grid gap-5 sm:grid-cols-2">
+                <label for="username" class="mb-1.5 block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  placeholder="Enter your first name"
+                  value="<%= oldInput.firstName ? oldInput.firstName : '' %>"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="lastName" class="mb-1.5 block text-sm font-medium text-gray-700">
+                  Last name
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  id="lastName"
+                  placeholder="Enter your last name"
+                  value="<%= oldInput.lastName ? oldInput.lastName : '' %>"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                />
+              </div>
+              
+              <div>
+                <label for="email" class="mb-1.5 block text-sm font-medium text-gray-700">
+                  Email address
+                </label>
+               <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your email"
+                    value="<%= oldInput.email ? oldInput.email : '' %>"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                />
+            </div>
+
+            <div>
+              <label for="password" class="mb-1.5 block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                    value="<%= oldInput.password ? oldInput.password : '' %>"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                  required
+                />
+                <button
+                  type="button"
+                  data-password-toggle="password"
+                  aria-controls="password"
+                  aria-pressed="false"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
+                >Show</button>
+              </div>
+            </div>
+
+            <div>
+              <label for="confirmPassword" class="mb-1.5 block text-sm font-medium text-gray-700">
+                Confirm password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  placeholder="Enter your password again"
+                    value="<%= oldInput.confirmPassword ? oldInput.confirmPassword : '' %>"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                  required
+                />
+                <button
+                  type="button"
+                  data-password-toggle="confirmPassword"
+                  aria-controls="confirmPassword"
+                  aria-pressed="false"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
+                >Show</button>
+              </div>
+            </div>
+
+            <fieldset>
+              <legend class="mb-2 text-sm font-medium text-gray-700">I want to join as a</legend>
+              <div class="grid grid-cols-2 gap-3">
+                <label for="guest" class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 transition hover:border-red-300 hover:bg-red-50/50">
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="guest"
+                    id="guest"
+                    class="h-4 w-4 accent-red-500"
+                    <%= oldInput.userType === 'guest' ? 'checked' : '' %>
+                  />
+                  <span>
+                    <span class="block text-sm font-semibold text-gray-800">Guest</span>
+                    <span class="block text-xs text-gray-500">Find a place to stay</span>
+                  </span>
+                </label>
+                <label for="host" class="flex cursor-pointer items-center gap-3 rounded-xl border border-gray-200 p-3.5 transition hover:border-red-300 hover:bg-red-50/50">
+                  <input
+                    type="radio"
+                    name="userType"
+                    value="host"
+                    id="host"
+                    class="h-4 w-4 accent-red-500"
+                    <%= oldInput.userType === 'host' || (!oldInput.userType && true) ? 'checked' : '' %>
+                  />
+                  <span>
+                    <span class="block text-sm font-semibold text-gray-800">Host</span>
+                    <span class="block text-xs text-gray-500">Share your home</span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="flex items-start gap-2">
+              <input
+                type="checkbox"
+                name="terms"
+                id="terms"
+                class="mt-1 h-4 w-4 accent-red-500"
+                required
+              />
+              <label for="terms" class="text-sm leading-5 text-gray-600">
+                I agree to the Terms and Conditions
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full rounded-xl bg-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/20 transition hover:-translate-y-0.5 hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-red-200"
+            >
+              Create account
+              <i class="fa-solid fa-arrow-right ml-2 text-sm" aria-hidden="true"></i>
+            </button>
+          </form>
+
+          <p class="mt-6 text-center text-sm text-gray-500">
+            Already have an account?
+            <a href="/auth/login" class="font-semibold text-red-500 transition hover:text-red-600">
+              Log in
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
+    <script>
+    document.querySelectorAll("[data-password-toggle]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.passwordToggle);
+        const isVisible = input.type === "text";
+        input.type = isVisible ? "password" : "text";
+        button.textContent = isVisible ? "Show" : "Hide";
+        button.setAttribute("aria-pressed", String(!isVisible));
+      });
+    });
+    </script>
+  </body>
+</html>

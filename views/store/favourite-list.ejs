@@ -2,41 +2,59 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-6xl">
-      <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
-        Here are your favorite homes
-      </h2>
-
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+      <header class="mb-8">
+        <p class="text-sm font-semibold uppercase tracking-wider text-red-500">Saved for later</p>
+        <h1 class="mt-1 text-3xl font-bold text-gray-900 sm:text-4xl">Your favourites</h1>
+        <p class="mt-2 text-gray-500">The stays you love, all in one place.</p>
+      </header>
       <% const getHomeImage = (home) => {
-           if (!home || !home.photoUrl) return '/images/placeholder.png';
-           if (home.photoUrl.startsWith('http')) return home.photoUrl;
-           if (home.photoUrl.startsWith('/')) return home.photoUrl;
-           return '/images/' + home.photoUrl;
+           if (!home || !home.photo) return '/images/placeholder.png';
+           if (home.photo.startsWith('http')) return home.photo;
+           if (home.photo.startsWith('/')) return home.photo;
+           return '/images/' + home.photo;
       }; %>
       <% if (favouriteHomes.length === 0) { %>
-        <p class="text-center text-gray-600">No favorite homes yet.</p>
+        <section class="rounded-2xl bg-white px-6 py-16 text-center shadow-sm ring-1 ring-gray-200/70">
+          <span class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-xl text-red-500">
+            <i class="fa-regular fa-heart" aria-hidden="true"></i>
+          </span>
+          <h2 class="text-xl font-bold text-gray-900">No favourites saved yet</h2>
+          <p class="mt-2 text-gray-500">Browse homes and save the ones you love.</p>
+          <a href="/homes" class="mt-6 inline-flex rounded-xl bg-red-500 px-5 py-3 font-semibold text-white transition hover:bg-red-600">Explore homes</a>
+        </section>
       <% } else { %>
-        <div class="flex flex-wrap justify-center gap-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <% favouriteHomes.forEach(home => { %>
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300 w-full max-w-sm">
-              <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=No+Image'">
-              <div class="p-4">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2"><%= home.houseName %></h3>
-                <p class="text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-2"></i><%= home.location %></p>
-                <div class="flex justify-between items-center mb-2">
-                  <span class="text-lg font-bold text-red-500">Rs<%= home.price %> / night</span>
-                  <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-yellow-400 mr-1">
-                      <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clip-rule="evenodd" />
-                    </svg>
-                    <span class="text-gray-700"><%= home.rating %></span>
+            <article class="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200/70 transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <a href="/homes/<%= home._id %>" class="block overflow-hidden">
+                <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="h-60 w-full object-cover transition duration-500 group-hover:scale-105" onerror="this.onerror=null;this.src='/images/placeholder.png'">
+              </a>
+              <div class="p-5">
+                <div class="mb-2 flex items-start justify-between gap-3">
+                  <div>
+                    <h2 class="text-lg font-bold text-gray-900"><%= home.houseName %></h2>
+                    <p class="mt-1 flex items-center gap-1.5 text-sm text-gray-500">
+                      <i class="fa-solid fa-location-dot text-red-400" aria-hidden="true"></i><%= home.location %>
+                    </p>
                   </div>
+                  <span class="flex shrink-0 items-center gap-1 text-sm font-semibold text-gray-700">
+                    <i class="fa-solid fa-star text-amber-400" aria-hidden="true"></i><%= home.rating %>
+                  </span>
                 </div>
-                <form action="/favourites/delete/<%= home._id %>" method="POST">
-                  <button type="submit" class="bg-red-300 p-2 rounded-md">Remove from Favorites</button>
-                </form>
+                <div class="mt-4 flex items-center justify-between gap-2 border-t border-gray-100 pt-4">
+                  <p class="text-gray-500">
+                    <span class="text-lg font-bold text-gray-900">Rs <%= home.price %></span>
+                    <span class="text-sm"> / night</span>
+                  </p>
+                  <form action="/favourites/delete/<%= home._id %>" method="POST">
+                    <button type="submit" class="rounded-xl border border-red-100 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                      <i class="fa-solid fa-heart-crack mr-1" aria-hidden="true"></i> Remove
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
+            </article>
           <% }) %>
         </div>
       <% } %>

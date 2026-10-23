@@ -1,0 +1,111 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="min-h-screen bg-gray-50 px-4 py-10 sm:py-16">
+      <section class="mx-auto grid max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl shadow-gray-200/70 lg:grid-cols-5">
+        <aside class="relative overflow-hidden bg-gradient-to-br from-red-500 to-rose-600 p-8 text-white sm:p-10 lg:col-span-2 lg:p-12">
+          <div class="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10"></div>
+          <div class="absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-white/10"></div>
+
+          <div class="relative flex h-full flex-col">
+            <span class="mb-10 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-xl">
+              <i class="fa-solid fa-house" aria-hidden="true"></i>
+            </span>
+
+            <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-red-100">
+              Welcome back
+            </p>
+            <h2 class="mb-4 text-3xl font-bold leading-tight sm:text-4xl">
+              Your next stay is just a step away.
+            </h2>
+            <p class="max-w-sm leading-relaxed text-red-100">
+              Sign in to pick up where you left off and explore places that feel like home.
+            </p>
+
+            <div class="mt-auto hidden items-center gap-3 pt-10 lg:flex">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
+                <i class="fa-solid fa-compass" aria-hidden="true"></i>
+              </span>
+              <span class="text-sm font-medium">A great trip starts here</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="p-6 sm:p-10 lg:col-span-3 lg:p-12">
+          <div class="mb-8">
+            <p class="mb-2 text-sm font-semibold text-red-500">GOOD TO SEE YOU</p>
+            <h1 class="text-3xl font-bold text-gray-900">Log in to your account</h1>
+            <p class="mt-2 text-gray-500">Enter your details to continue.</p>
+          </div>
+
+          <form action="/auth/login" method="POST" class="space-y-5">
+             <%- include('../partials/errors') %>
+            <div>
+              <label for="username" class="mb-1.5 block text-sm font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your Email"
+                value="<%= oldInput.email ? oldInput.email : '' %>"
+                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="password" class="mb-1.5 block text-sm font-medium text-gray-700">
+                Password
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-16 transition placeholder:text-gray-400 focus:border-red-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-red-100"
+                  required
+                />
+                <button
+                  type="button"
+                  data-password-toggle="password"
+                  aria-controls="password"
+                  aria-pressed="false"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-gray-500 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-400"
+                >Show</button>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full rounded-xl bg-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/20 transition hover:-translate-y-0.5 hover:bg-red-600 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-red-200"
+            >
+              Log in
+              <i class="fa-solid fa-arrow-right ml-2 text-sm" aria-hidden="true"></i>
+            </button>
+          </form>
+
+          <p class="mt-6 text-center text-sm text-gray-500">
+            New here?
+            <a href="/auth/signup" class="font-semibold text-red-500 transition hover:text-red-600">
+              Create an account
+            </a>
+          </p>
+        </div>
+      </section>
+    </main>
+    <script>
+      document.querySelectorAll("[data-password-toggle]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const input = document.getElementById(button.dataset.passwordToggle);
+          const isVisible = input.type === "text";
+          input.type = isVisible ? "password" : "text";
+          button.textContent = isVisible ? "Show" : "Hide";
+          button.setAttribute("aria-pressed", String(!isVisible));
+        });
+      });
+    </script>
+  </body>
+</html>

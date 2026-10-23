@@ -2,12 +2,19 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto mt-8 p-4">
-      <div class="bg-white shadow-md rounded-lg p-6 text-center">
-        <h1 class="text-3xl font-bold text-red-500 mb-4">Home Registered Successfully</h1>
-        <p class="text-lg text-gray-600">Your home has been added to our listings.</p>
-        <a href="/" class="inline-block mt-6 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300">Return to Home</a>
-      </div>
+    <main class="mx-auto max-w-2xl px-4 py-16 sm:px-6">
+      <section class="rounded-3xl bg-white px-6 py-14 text-center shadow-sm ring-1 ring-gray-200/70 sm:px-12">
+        <span class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-2xl text-green-600">
+          <i class="fa-solid fa-check" aria-hidden="true"></i>
+        </span>
+        <p class="text-sm font-semibold uppercase tracking-wider text-green-600">All set</p>
+        <h1 class="mt-2 text-3xl font-bold text-gray-900">Your home is listed!</h1>
+        <p class="mx-auto mt-3 max-w-md text-gray-500">Your home has been added. You can manage its details any time from your host dashboard.</p>
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href="/host/host-home-list" class="rounded-xl bg-red-500 px-5 py-3 font-semibold text-white transition hover:bg-red-600">Manage my homes</a>
+          <a href="/" class="rounded-xl border border-gray-200 px-5 py-3 font-semibold text-gray-700 transition hover:bg-gray-50">Return home</a>
+        </div>
+      </section>
     </main>
   </body>
 </html>

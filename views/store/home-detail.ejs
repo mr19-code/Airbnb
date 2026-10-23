@@ -1,50 +1,65 @@
 <%- include('../partials/head') %>
   </head>
   <body>
-      <%- include('../partials/nav') %>
-      <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-6xl">
-          <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
-              Details of <%= home.houseName %>
-          </h2>
-          <% const getHomeImage = (home) => {
-               if (!home || !home.photoUrl) return '/images/placeholder.png';
-               if (home.photoUrl.startsWith('http')) return home.photoUrl;
-               if (home.photoUrl.startsWith('/')) return home.photoUrl;
-               return '/images/' + home.photoUrl;
-          }; %>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div class="rounded-lg overflow-hidden">
-                  <img src="<%= getHomeImage(home) %>" alt="<%= home.houseName %>" class="w-full h-96 object-cover">
-              </div>
-              
-              <div class="space-y-6">
-                  <div class="border-b pb-4">
-                      <h3 class="text-2xl font-semibold mb-2">Description</h3>
-                      <p class="text-gray-600"><%= home.description || 'A beautiful home with a welcoming atmosphere and all the essentials for a comfortable stay.' %></p>
-                  </div>
-
-                  <div class="border-b pb-4">
-                      <h3 class="text-2xl font-semibold mb-2">Location</h3>
-                      <p class="text-gray-600"><%= home.location %></p>
-                  </div>
-                  
-                  <div class="border-b pb-4">
-                      <h3 class="text-2xl font-semibold mb-2">Price</h3>
-                      <p class="text-green-600 text-xl font-bold">$<%= home.price %> / night</p>
-                  </div>
-                  
-                  <div class="border-b pb-4">
-                      <h3 class="text-2xl font-semibold mb-2">Rating</h3>
-                      <div class="flex items-center">
-                          <span class="text-yellow-400 text-xl">★</span>
-                          <span class="ml-2 text-lg"><%= home.rating %> / 5</span>
-                      </div>
-                  </div>
-                  <div class="mt-4">
-                     <%- include('../partials/favourite', { home: home }) %>
-                  </div>
-              </div>
+    <%- include('../partials/nav') %>
+    <main class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      <% const getHomeImage = (home) => {
+           if (!home || !home.photo) return '/images/placeholder.png';
+           if (home.photo.startsWith('http')) return home.photo;
+           if (home.photo.startsWith('/')) return home.photo;
+           return '/images/' + home.photo;
+      }; %>
+      <a href="/homes" class="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-gray-500 transition hover:text-red-600">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to homes
+      </a>
+      <article class="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-gray-200/70">
+        <div class="relative">
+          <img
+            src="<%= getHomeImage(home) %>"
+            alt="<%= home.houseName %>"
+            class="h-72 w-full object-cover sm:h-96"
+            onerror="this.onerror=null;this.src='/images/placeholder.png'"
+          />
+          <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-6 sm:p-8">
+            <p class="mb-2 flex items-center gap-2 text-sm font-medium text-white/90">
+              <i class="fa-solid fa-location-dot" aria-hidden="true"></i><%= home.location %>
+            </p>
+            <h1 class="text-3xl font-bold text-white sm:text-4xl"><%= home.houseName %></h1>
           </div>
-      </main>
+        </div>
+
+        <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_300px]">
+          <div>
+            <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-gray-600">
+              <span class="inline-flex items-center gap-2">
+                <i class="fa-solid fa-star text-amber-400" aria-hidden="true"></i>
+                <strong class="text-gray-900"><%= home.rating %></strong> rating
+              </span>
+              <span class="inline-flex items-center gap-2">
+                <i class="fa-solid fa-house text-red-400" aria-hidden="true"></i>
+                A welcoming place to stay
+              </span>
+            </div>
+            <div class="border-t border-gray-100 pt-6">
+              <h2 class="text-xl font-bold text-gray-900">About this home</h2>
+              <p class="mt-3 leading-7 text-gray-600"><%= home.description || 'A beautiful home with a welcoming atmosphere and all the essentials for a comfortable stay.' %></p>
+            </div>
+            <div class="mt-6 border-t border-gray-100 pt-6">
+              <h2 class="text-xl font-bold text-gray-900">Location</h2>
+              <p class="mt-2 flex items-center gap-2 text-gray-600">
+                <i class="fa-solid fa-location-dot text-red-400" aria-hidden="true"></i><%= home.location %>
+              </p>
+            </div>
+          </div>
+
+          <aside class="h-fit rounded-2xl border border-gray-200 p-5 shadow-sm">
+            <p class="text-gray-500">Price per night</p>
+            <p class="mt-1 text-2xl font-bold text-gray-900">Rs <%= home.price %></p>
+            <div class="my-5 border-t border-gray-100"></div>
+            <%- include('../partials/favourite', { home: home }) %>
+          </aside>
+        </div>
+      </article>
+    </main>
   </body>
 </html>
